@@ -1,0 +1,31 @@
+{
+  "name": "zeitkonto-hannover",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Community time exchange platform for Hannover",
+  "keywords": ["community", "time-bank", "hannover", "exchange"],
+  "author": "Zeitkonto Hannover Team",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspace=apps/web",
+    "start": "npm run start --workspace=apps/web",
+    "lint": "npm run lint --workspace=apps/web",
+    "test": "echo \"No tests yet\"",
+    "db:push": "supabase db push",
+    "db:reset": "supabase db reset",
+    "prepare": "husky install"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.0"
+  }
+}
