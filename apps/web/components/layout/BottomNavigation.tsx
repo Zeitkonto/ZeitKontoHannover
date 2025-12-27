@@ -5,18 +5,19 @@ import { usePathname } from 'next/navigation'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { 
   HomeIcon, 
-  ClockIcon, 
+  ArrowPathIcon,
   PlusCircleIcon, 
   MagnifyingGlassIcon, 
   UserIcon,
-  ArrowRightOnRectangleIcon
+  ClockIcon
 } from '@heroicons/react/24/outline'
 import { 
   HomeIcon as HomeIconSolid, 
-  ClockIcon as ClockIconSolid,
+  ArrowPathIcon as ArrowPathIconSolid,
   PlusCircleIcon as PlusCircleIconSolid,
   MagnifyingGlassIcon as MagnifyingGlassIconSolid,
-  UserIcon as UserIconSolid
+  UserIcon as UserIconSolid,
+  ClockIcon as ClockIconSolid
 } from '@heroicons/react/24/solid'
 
 const navigationItems = [
@@ -58,9 +59,20 @@ const navigationItems = [
   },
 ]
 
+// Ítem adicional para Intercambios (no en bottom nav por espacio, pero accesible)
+const extraItems = [
+  {
+    name: 'Intercambios',
+    href: '/exchanges',
+    icon: ArrowPathIcon,
+    activeIcon: ArrowPathIconSolid,
+    public: false,
+  }
+]
+
 export default function BottomNavigation() {
   const pathname = usePathname()
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
   const isAuthenticated = !!user
   
   // Si no está autenticado, solo mostrar opciones públicas
@@ -112,34 +124,26 @@ export default function BottomNavigation() {
               </Link>
             )
           })}
-          
-          {/* Botón de login/logout */}
-          {!isAuthenticated ? (
-            <Link
-              href="/login"
-              className="flex flex-col items-center justify-center flex-1 py-2"
-            >
-              <ArrowRightOnRectangleIcon className={`h-6 w-6 ${pathname === '/login' ? 'text-blue-500' : 'text-gray-400'}`} />
-              <span className={`text-xs mt-1 ${pathname === '/login' ? 'text-blue-500 font-medium' : 'text-gray-500'}`}>
-                Entrar
-              </span>
-            </Link>
-          ) : (
-            <button
-              onClick={logout}
-              className="flex flex-col items-center justify-center flex-1 py-2"
-            >
-              <ArrowRightOnRectangleIcon className="h-6 w-6 text-gray-400" />
-              <span className="text-xs mt-1 text-gray-500">
-                Salir
-              </span>
-            </button>
-          )}
         </div>
         
         {/* Notch para iPhone */}
         <div className="h-safe-bottom bg-white"></div>
       </nav>
+
+      {/* Botón flotante para Intercambios (alternativa si no cabe en bottom nav) */}
+      {isAuthenticated && (
+        <Link
+          href="/exchanges"
+          className="fixed right-4 bottom-20 md:hidden z-40"
+        >
+          <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-shadow">
+            <ArrowPathIcon className="h-6 w-6" />
+          </div>
+          <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+            Intercambios
+          </div>
+        </Link>
+      )}
     </>
   )
 }
