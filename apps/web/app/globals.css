@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Safe area para iPhone notch */
+@supports (padding: max(0px)) {
+  .h-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .min-h-screen-safe {
+    min-height: calc(100vh - env(safe-area-inset-bottom));
+  }
+}
+
+/* Mejoras para móvil */
+@media (max-width: 768px) {
+  /* Mejorar táctil */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Evitar zoom en inputs iOS */
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+/* Animaciones suaves */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
